@@ -43,7 +43,7 @@ class FreemobilenotifierPlugin(octoprint.plugin.EventHandlerPlugin,
 		elapsed_time = octoprint.util.get_formatted_timedelta(datetime.timedelta(seconds=payload["time"]))
 
 		tags = {'filename': filename, 'elapsed_time': elapsed_time}
-		message = self._settings.get(["message_format", "body"]).format(**tags)
+		message = urllib.urlencode(self._settings.get(["message_format", "body"]).format(**tags))
 		login = self._settings.get(["login"])
 		pass_key = self._settings.get(["pass_key"])
 		url = 'https://smsapi.free-mobile.fr/sendmsg?&user='+login+'&pass='+pass_key+'&msg='+message
